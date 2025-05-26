@@ -3,7 +3,7 @@ services:
   database:
     restart: unless-stopped
     image: mysql
-    command: --default-authentication-plugin=mysql_native_password
+    # command: --default-authentication-plugin=mysql_native_password
     ports:
       # So you can use a database client on your host machine
       - 3306:3306
