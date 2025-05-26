@@ -18,7 +18,7 @@ services:
       context: ./docker/php
     working_dir: ${WEB_ROOT}
     volumes:
-      - ./src:/var/www/html
+      - ${PWD}/src:/var/www/html
       - terminal-history:/root/
       - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
     environment:
@@ -34,7 +34,7 @@ services:
       - 8000:80
       - 4433:443
     volumes:
-      - ./src:/var/www/html
+      - ${PWD}/src:/var/www/html
       - ./docker/nginx/default.conf:/etc/nginx/templates/default.conf.template
     environment:
       - WEB_ROOT=${WEB_ROOT}
