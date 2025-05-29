@@ -1,0 +1,6 @@
+:80 {
+    # Serve the PHP application
+    root * /var/www/html/public
+    php_fastcgi php:9000  # Change this to match the service name in docker-compose
+    file_server
+}

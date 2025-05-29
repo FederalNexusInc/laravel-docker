@@ -3,74 +3,53 @@ services:
   database:
     restart: unless-stopped
     image: mysql
-    # command: --default-authentication-plugin=mysql_native_password
     ports:
-      # So you can use a database client on your host machine
       - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=secret
     volumes:
       - mysql-persistent:/var/lib/mysql
+    networks:
+      - ramJackApp
+
   php:
-    restart: unless-stopped
+    build: .
+    expose:
+      - 9000
     container_name: php_container
-    build:
-      context: ./docker/php
-    working_dir: ${WEB_ROOT}
     volumes:
       - ./src:/var/www/html
-      - terminal-history:/root/
-      - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
-    environment:
-      - WEB_ROOT=${WEB_ROOT}
-    command: sh -c "chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache && php-fpm"
-  webserver:
-    restart: unless-stopped
-    image: nginx:alpine
+    networks:
+      - ramJackApp
+    command: >
+      sh -c "chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache &&
+      chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache &&
+      php-fpm"
+
+  caddy:
+    image: caddy:latest
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./src:/var/www/html
+    ports:
+      - 5001:80
     depends_on:
       - php
-    ports:
-      # Exposing both http and https
-      - 8000:80
-      - 4433:443
-    volumes:
-      - ./src:/var/www/html
-      - ./docker/nginx/default.conf:/etc/nginx/templates/default.conf.template
-    environment:
-      - WEB_ROOT=${WEB_ROOT}
+    networks:
+      - ramJackApp
+
   store:
     restart: unless-stopped
     image: redis:alpine
     volumes:
       - redis-persistent:/data
-  worker:
-    restart: unless-stopped
-    container_name: worker_container
-    build:
-      context: ./docker/php
-    working_dir: ${WEB_ROOT}
-    volumes:
-      - .:${WEB_ROOT}
-      - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
-    environment:
-      - WEB_ROOT=${WEB_ROOT}
-    command: php artisan horizon
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - .:${WEB_ROOT}
-    depends_on:
-      - webserver
-    command: certonly --webroot --webroot-path=${WEB_ROOT}/public --email info@company.xyz --agree-tos --no-eff-email --staging -d 74e081735dca.eu.ngrok.io
-
-
+    networks:
+      - ramJackApp
 
 volumes:
-  terminal-history:
   redis-persistent:
   mysql-persistent:
-  certbot-etc:
-  certbot-var:
+
+networks:
+  ramJackApp:
+    driver: bridge
