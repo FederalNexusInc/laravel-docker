@@ -14,7 +14,7 @@ class CreateProject extends CreateRecord
 
     protected function getRedirectUrl(): string
     {
-        return ProjectSpecialistResource::getUrl('create');
+        return ProjectResource::getUrl('edit', ['record' => $this->record->project_id]);
     }
 
         protected function handleRecordCreation(array $data): Model

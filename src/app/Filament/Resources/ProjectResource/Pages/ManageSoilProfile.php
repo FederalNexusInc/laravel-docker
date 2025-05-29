@@ -38,7 +38,8 @@ class ManageSoilProfile extends ManageRelatedRecords
                     ->columnSpan(1),
                 Forms\Components\TextInput::make('maximum_depth')
                     ->integer()
-                    ->columnSpan(1),
+                    ->columnSpan(1)
+                    ->required(),
                 Forms\Components\TextInput::make('water_table_depth')
                     ->integer()
                     ->columnSpan(1),
@@ -47,6 +48,7 @@ class ManageSoilProfile extends ManageRelatedRecords
                         'cohesive' => 'Cohesive',
                         'non-cohesive' => 'NonCohesive',
                     ])
+                    ->required()
                     ->columnSpan(1),
             ])
             ->columns(4);;

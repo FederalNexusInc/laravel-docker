@@ -31,7 +31,7 @@ class ProjectResource extends Resource
                 Forms\Components\TextInput::make('project_number')->columnSpan(4),
                 Forms\Components\TextInput::make('run_id')->columnSpan(4),
                 Forms\Components\TextInput::make('soil_reporter')->label('Soils Report Provided/Performed by')->columnSpan(3),
-                Forms\Components\TextInput::make('soil_report_number')->integer()->columnSpan(3),
+                Forms\Components\TextInput::make('soil_report_number')->columnSpan(3),
                 Forms\Components\DatePicker::make('soil_report_date')->columnSpan(3),
                 Forms\Components\Select::make('pile_type')
                     ->options([
@@ -40,8 +40,10 @@ class ProjectResource extends Resource
                         'slab_pile' => 'Slab Pile',
                         'tie_back_anchor' => 'Tie Back Anchor',
                         'underpinning_pile' => 'Underpinning Pile',
-                    ])->columnSpan(3),
-                Forms\Components\TextInput::make('boring_number')->integer()->columnSpan(4),
+                    ])
+                    ->required()
+                    ->columnSpan(3),
+                Forms\Components\TextInput::make('boring_number')->columnSpan(4),
                 Forms\Components\DatePicker::make('boring_log_date')->columnSpan(4),
                 Forms\Components\TextInput::make('termination_depth')->integer()->columnSpan(4),
                 Forms\Components\TextInput::make('project_address')->columnSpan(3),
@@ -51,7 +53,7 @@ class ProjectResource extends Resource
                     ->searchable()
                     ->columnSpan(3),
                 Forms\Components\TextInput::make('project_zip_code')->columnSpan(3),
-                Forms\Components\Textarea::make('remarks')->columnSpan(12),
+                Forms\Components\Textarea::make('remarks')->label('Field Notes')->columnSpan(12),
             ])
             ->columns(12);;
     }

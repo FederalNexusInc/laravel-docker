@@ -37,6 +37,7 @@ class ManageSoilLayer extends ManageRelatedRecords
                     ->required(),
                 Forms\Components\TextInput::make('start_depth')
                     ->numeric()
+                    ->required()
                     ->columnSpan(4),
                 Forms\Components\TextInput::make('blow_count')
                     ->numeric()

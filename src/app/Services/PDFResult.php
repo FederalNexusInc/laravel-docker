@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Project;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PDFResult
 {
@@ -61,8 +62,12 @@ class PDFResult
             // Depth results
             'calculation_type' => $resultData['CalculationType'] ?? 'N/A',
             'depth_results' => $this->formatDepthResults($resultData['DepthResults'] ?? []),
+            'chart_image' => session('chart_image_base64') ?? 'N/A',
         ];
 
+        Log::info('pdfData', [
+            'pdfData' => $pdfData
+        ]);
         // Generate the PDF
         $pdf = Pdf::loadView('pdf.ramjack-report', $pdfData)
                   ->setPaper('letter', 'portrait');

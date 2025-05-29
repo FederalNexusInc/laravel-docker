@@ -454,5 +454,12 @@
         </div>
     </div>
     <div class="clearfix"></div>
+    <div>
+        @if (!empty($chart_image) && $chart_image !== 'N/A')
+            <img src="{{ $chart_image }}" alt="Anchor Result Chart" width='100%'/>
+        @else
+            <p></p>
+        @endif
+    </div>
 </body>
 </html>

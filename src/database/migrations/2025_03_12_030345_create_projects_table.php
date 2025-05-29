@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('project_number')->nullable();
             $table->string('run_id')->nullable();
             $table->string('soil_reporter')->nullable();
-            $table->integer('soil_report_number')->nullable();
+            $table->string('soil_report_number')->nullable();
             $table->date('soil_report_date')->nullable();
             $table->string('pile_type');
-            $table->integer('boring_number')->nullable();
+            $table->string('boring_number')->nullable();
             $table->date('boring_log_date')->nullable();
             $table->integer('termination_depth')->nullable();
             $table->string('project_address')->nullable();
