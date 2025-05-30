@@ -59,8 +59,8 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->brandLogo(asset('ramjack logo.png'))
-            ->darkModeBrandLogo(asset('ramjack logo dark.png'))
+            ->brandLogo(asset('ramjack_logo.png'))
+            ->darkModeBrandLogo(asset('ramjack_logo_dark.png'))
             ->brandLogoHeight('4rem')
             ->favicon(asset('favicon.ico'))
             ->userMenuItems([
