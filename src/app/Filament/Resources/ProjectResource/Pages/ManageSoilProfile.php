@@ -59,9 +59,12 @@ class ManageSoilProfile extends ManageRelatedRecords
         return $table
             ->recordTitleAttribute('project_id')
             ->columns([
-                Tables\Columns\TextColumn::make('maximum_depth'),
-                Tables\Columns\TextColumn::make('water_table_depth'),
-                Tables\Columns\TextColumn::make('soil_type'),
+                Tables\Columns\TextColumn::make('maximum_depth')
+                ->toggleable(),
+                Tables\Columns\TextColumn::make('water_table_depth')
+                ->toggleable(),
+                Tables\Columns\TextColumn::make('soil_type')
+                ->toggleable(),
             ])
             ->filters([
                 //
