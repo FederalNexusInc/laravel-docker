@@ -37,12 +37,10 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -61,7 +59,9 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->brandLogo(asset('ramjack logo.png'))
+            ->brandLogo(asset('ramjack_logo.png'))
+            ->darkModeBrandLogo(asset('ramjack_logo_dark.png'))
+            ->brandLogoHeight('4rem')
             ->favicon(asset('favicon.ico'))
             ->userMenuItems([
                 'profile' => MenuItem::make()

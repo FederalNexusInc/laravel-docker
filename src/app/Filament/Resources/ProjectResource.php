@@ -68,23 +68,114 @@ class ProjectResource extends Resource
             })
             ->columns([
                 Tables\Columns\TextColumn::make('project_name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('project_location')
                     ->label('Location')
                     ->getStateUsing(function (Project $record): string {
-                        return "{$record->project_city}, {$record->project_state} {$record->project_zip_code}";
+                        $city = $record->project_city ?? 'N/A';
+                        $state = $record->project_state ?? 'N/A';
+                        $zip = $record->project_zip_code ?? 'N/A';
+                        return "{$city}, {$state} {$zip}";
                     })
-                    ->searchable(),
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created Date')
                     ->dateTime('m-d-Y')
                     ->sortable()
                     ->toggleable(),
+
+                Tables\Columns\TextColumn::make('project_number')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('run_id')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('soil_reporter')
+                    ->label('Soils Report By')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('soil_report_number')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('soil_report_date')
+                    ->date('m-d-Y')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('pile_type')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('boring_number')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('boring_log_date')
+                    ->date('m-d-Y')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('termination_depth')
+                    ->label('Term. Depth')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('project_address')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('project_city')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('project_state')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('project_zip_code')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('remarks')
+                    ->label('Field Notes')
+                    ->limit(50)
+                    ->tooltip(function (Project $record): ?string {
+                        return strlen($record->remarks) > 50 ? $record->remarks : null;
+                    })
+                    ->searchable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('project_state')
                     ->options(self::getStates()),
+                Tables\Filters\TernaryFilter::make('soil_report_provided')
+                    ->nullable()
+                    ->label('Soil Report Provided')
+                    ->attribute('soil_reporter')
+                    ->boolean()
+                    ->queries(
+                        true: fn (Builder $query) => $query->whereNotNull('soil_reporter'),
+                        false: fn (Builder $query) => $query->whereNull('soil_reporter'),
+                    ),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

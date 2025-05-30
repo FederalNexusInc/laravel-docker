@@ -82,20 +82,63 @@ class ManageSoilLayer extends ManageRelatedRecords
         return $table
             ->recordTitleAttribute('soil_profile_id')
             ->columns([
-                Tables\Columns\TextColumn::make('start_depth'),
-                Tables\Columns\TextColumn::make('soilLayerType.name'),
-                Tables\Columns\TextColumn::make('blow_count'),
-                Tables\Columns\TextColumn::make('cohesion'),
-                Tables\Columns\TextColumn::make('coefficient_of_adhesion'),
-                Tables\Columns\TextColumn::make('angle_of_internal_friction'),
-                Tables\Columns\TextColumn::make('coefficient_of_external_friction'),
-                Tables\Columns\TextColumn::make('moist_unit_weight'),
-                Tables\Columns\TextColumn::make('saturated_unit_weight'),
-                Tables\Columns\TextColumn::make('nc'),
-                Tables\Columns\TextColumn::make('nq'),
+                // Default Visible Columns
+                Tables\Columns\TextColumn::make('start_depth')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('soilLayerType.name')
+                    ->label('Soil Layer Type')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('blow_count')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('cohesion')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('coefficient_of_adhesion')
+                    ->label('Coeff. Adhesion')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('angle_of_internal_friction')
+                    ->label('Int. Friction Angle')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('coefficient_of_external_friction')
+                    ->label('Ext. Friction Coeff.')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('moist_unit_weight')
+                    ->label('Moist Unit Weight')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('saturated_unit_weight')
+                    ->label('Sat. Unit Weight')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('nc')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('nq')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime('m-d-Y H:i A')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime('m-d-Y H:i A')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('soil_layer_type_id')
+                    ->label('Soil Layer Type')
+                    ->relationship('soilLayerType', 'name')
+                    ->searchable(),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()

@@ -2,14 +2,15 @@
 
 namespace App\Filament\Resources\ProjectResource\Pages;
 
-use App\Filament\Resources\ProjectResource;
-use Filament\Actions;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Pages\ManageRelatedRecords;
 use Filament\Tables;
+use Filament\Actions;
+use App\Models\Anchor;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\ProjectResource;
+use Filament\Resources\Pages\ManageRelatedRecords;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ManageAnchor extends ManageRelatedRecords
@@ -202,10 +203,142 @@ class ManageAnchor extends ManageRelatedRecords
             ->recordTitleAttribute('anchor_id')
             ->columns([
                 Tables\Columns\TextColumn::make('lead_shaft_od')
-                    ->label('Size'),
+                    ->label('Lead Shaft OD')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('lead_shaft_length')
+                    ->label('Lead Shaft Length')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('extension_shaft_od')
+                    ->label('Ext. Shaft OD')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('wall_thickness')
+                    ->label('Wall Thickness')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('yield_strength')
+                    ->label('Yield Strength')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('tensile_strength')
+                    ->label('Tensile Strength')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('empirical_torque_factor')
+                    ->label('Empirical Torque Factor')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('required_allowable_capacity')
+                    ->label('Req. Allow. Capacity')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('anchor_type')
+                    ->label('Anchor Type')
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        '1' => 'Compression',
+                        '2' => 'Tension',
+                        default => 'N/A',
+                    })
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('required_safety_factor')
+                    ->label('Req. Safety Factor')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('anchor_declination_degree')
+                    ->label('Declination Degree')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('pile_head_position')
+                    ->label('Pile Head Position')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('x1')->label('X1')->numeric()->sortable()->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('x2')->label('X2')->numeric()->sortable()->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('x3')->label('X3')->numeric()->sortable()->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('x4')->label('X4')->numeric()->sortable()->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('x5')->label('X5')->numeric()->sortable()->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('y1')->label('Y1')->numeric()->sortable()->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('y2')->label('Y2')->numeric()->sortable()->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('y3')->label('Y3')->numeric()->sortable()->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('y4')->label('Y4')->numeric()->sortable()->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('y5')->label('Y5')->numeric()->sortable()->toggleable()->toggledHiddenByDefault(),
+                Tables\Columns\IconColumn::make('omit_shaft_resistance')
+                    ->label('Omit Shaft Resistance')
+                    ->boolean()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\IconColumn::make('omit_helix_mechanical_strength_check')
+                    ->label('Omit Helix Mech. Strength Check')
+                    ->boolean()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\IconColumn::make('omit_shaft_mechanical_strength_check')
+                    ->label('Omit Shaft Mech. Strength Check')
+                    ->boolean()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+
+                Tables\Columns\TextColumn::make('field_notes')
+                    ->label('Field Notes')
+                    ->limit(50)
+                    ->tooltip(fn (Anchor $record): ?string => strlen($record->field_notes) > 50 ? $record->field_notes : null)
+                    ->searchable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime('m-d-Y H:i A')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime('m-d-Y H:i A')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('anchor_type')
+                    ->options([
+                        1 => 'Compression',
+                        2 => 'Tension',
+                    ])
+                    ->label('Anchor Type'),
+                Tables\Filters\SelectFilter::make('lead_shaft_od')
+                    ->options([
+                        '2 3/8' => '2 3/8',
+                        '2 7/8' => '2 7/8',
+                        '3 1/2' => '3 1/2',
+                        '4 1/2' => '4 1/2',
+                        '5 1/2' => '5 1/2',
+                        '6 5/8' => '6 5/8',
+                        '8 5/8'=> '8 5/8',
+                    ])
+                    ->label('Lead Shaft OD'),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),

@@ -55,15 +55,12 @@ class ManageHelix extends ManageRelatedRecords
                     ])
                     ->reactive()
                     ->afterStateUpdated(function (Forms\Set $set, $state) {
-                        // Extract the size from the description
                         if (preg_match('/Size (\d+)/', $state, $matches)) {
                             $size = $matches[1];
                             $set('size', $size);
                         } else {
                             $set('size', null);
                         }
-
-                        // Extract the thickness from the description
                         if (preg_match('/Thickness (\d+\/\d+)/', $state, $matches)) {
                             $thicknessFraction = $matches[1];
                             $thicknessDecimal = $this->fractionToDecimal($thicknessFraction);
@@ -71,8 +68,6 @@ class ManageHelix extends ManageRelatedRecords
                         } else {
                             $set('thickness', null);
                         }
-
-                        // Update the rating based on the description
                         $rating = $this->getRatingFromDescription($state);
                         $set('rating', $rating);
                     }),
@@ -102,13 +97,59 @@ class ManageHelix extends ManageRelatedRecords
             ->recordTitleAttribute('helix_id')
             ->columns([
                 Tables\Columns\TextColumn::make('anchor.lead_shaft_od')
-                    ->label('Anchor'),
-                Tables\Columns\TextColumn::make('description'),
+                    ->label('Anchor OD')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('helix_count')
-                    ->label('Helix Count'),
+                    ->label('Helix Count')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('size')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('thickness')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('rating')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime('m-d-Y H:i A')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime('m-d-Y H:i A')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('description')
+                    ->options([
+                        'Size 8 Thickness 3/8' => 'Size 8 Thickness 3/8',
+                        'Size 8 Thickness 1/2' => 'Size 8 Thickness 1/2',
+                        'Size 10 Thickness 3/8' => 'Size 10 Thickness 3/8',
+                        'Size 10 Thickness 1/2' => 'Size 10 Thickness 1/2',
+                        'Size 12 Thickness 3/8' => 'Size 12 Thickness 3/8',
+                        'Size 12 Thickness 1/2' => 'Size 12 Thickness 1/2',
+                        'Size 14 Thickness 1/2' => 'Size 14 Thickness 1/2',
+                        'Size 16 Thickness 1/2' => 'Size 16 Thickness 1/2',
+                    ])
+                    ->label('Helix Type')
+                    ->searchable(),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
@@ -119,7 +160,7 @@ class ManageHelix extends ManageRelatedRecords
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

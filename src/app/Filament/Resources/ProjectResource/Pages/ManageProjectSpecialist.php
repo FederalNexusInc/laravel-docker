@@ -62,14 +62,54 @@ class ManageProjectSpecialist extends ManageRelatedRecords
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('project_id')
+            ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('company_name'),
-                Tables\Columns\TextColumn::make('state'),
+                Tables\Columns\TextColumn::make('name')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('company_name')
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('state')
+                    ->sortable()
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('specialist_email')
+                    ->label('Email')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('address')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('city')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('zip')
+                    ->label('Zip Code')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('remarks')
+                    ->limit(50)
+                    ->tooltip(fn ($record) => $record->remarks)
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime('m-d-Y H:i A')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime('m-d-Y H:i A')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
             ])
             ->filters([
-                //
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
