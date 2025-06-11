@@ -19,6 +19,7 @@ services:
     container_name: php_container
     volumes:
       - ./src:/var/www/html
+      - .env:/var/www/html/.env
     networks:
       - ramJackApp
     command: >
