@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('disclaimer_acknowledged')->default(false)->after('password'); 
-            $table->string('company_name')->defualt(null)->after('disclaimer_acknowledged');
+            $table->string('company_name')->nullable()->after('disclaimer_acknowledged');
         });
     }
 
