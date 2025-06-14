@@ -1,19 +1,55 @@
 <x-filament::page>
     @if (session()->has('error'))
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <select
+                wire:model.live="selectedAnchorId"
+                class="form-select border-gray-300 focus:border-primary-500 focus:ring-primary-500 rounded-md shadow-sm"
+            >
+                @foreach ($anchors as $anchor)
+                    <option value="{{ $anchor->anchor_id }}">
+                        {{ $anchor->lead_shaft_od }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-            <strong class="font-bold">Error!</strong>
+            <strong class="font-bold">Session Error!</strong>
             <span class="block sm:inline">{{ session('error') }}</span>
         </div>
     @endif
 
     @if (isset($data['ErrorMessage']) && $data['ErrorMessage'])
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <select
+                wire:model.live="selectedAnchorId"
+                class="form-select border-gray-300 focus:border-primary-500 focus:ring-primary-500 rounded-md shadow-sm"
+            >
+                @foreach ($anchors as $anchor)
+                    <option value="{{ $anchor->anchor_id }}">
+                        {{ $anchor->lead_shaft_od }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-            <strong class="font-bold">Error!</strong>
+            <strong class="font-bold">Data Error!</strong>
             <span class="block sm:inline">{{ $data['ErrorMessage'] }}</span>
         </div>
     @endif
 
     @if (count($data) > 0)
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <select
+                wire:model.live="selectedAnchorId"
+                class="form-select border-gray-300 focus:border-primary-500 focus:ring-primary-500 rounded-md shadow-sm"
+            >
+                @foreach ($anchors as $anchor)
+                    <option value="{{ $anchor->anchor_id }}">
+                        {{ $anchor->lead_shaft_od }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="flex-1">
                 <h2 class="text-xl font-bold mb-2 text-center">Helical Pile/Anchor Information</h2>

@@ -32,13 +32,18 @@ class ResultService
         $this->torsionalResistanceCalculator = $torsionalResistanceCalculator;
     }
 
-    public function calculateProjectResults(int $projectId, int $interval = 1): ResultData
+    public function calculateProjectResults(int $projectId, ?int $interval = 1, ?int $anchorId = null): ResultData
     {
         try {
             $project = Project::with(['anchors.helixes', 'anchors.soilProfile.soilLayers', 'soilProfile.soilLayers'])->findOrFail($projectId);
             $results = new ResultData();
 
-            $anchor = $project->anchors()->first();
+            if ($anchorId === null) {
+                $anchor = $project->anchors()->first();
+            }
+            else {
+                $anchor = $project->anchors()->where('anchor_id', $anchorId)->first();
+            }
 
             $soilProfile = $project->soilProfile;
             if (!$soilProfile) {
