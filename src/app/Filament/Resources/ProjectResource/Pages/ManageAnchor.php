@@ -42,7 +42,8 @@ class ManageAnchor extends ManageRelatedRecords
                         '6 5/8' => '6 5/8',
                         '8 5/8'=> '8 5/8',
                     ])
-                    ->columnSpan(4),
+                    ->columnSpan(4)
+                    ->required(),
                 Forms\Components\TextInput::make('lead_shaft_length')
                     ->label('Lead Shaft Length')
                     ->numeric()
@@ -119,28 +120,32 @@ class ManageAnchor extends ManageRelatedRecords
                                     ->hiddenLabel()
                                     ->numeric()
                                     ->placeholder('X1')
-                                    ->columnSpan(1),
+                                    ->columnSpan(1)
+                                    ->required(),
                                 Forms\Components\TextInput::make('x2')
                                     ->hiddenLabel()
                                     ->numeric()
                                     ->placeholder('X2')
-                                    ->columnSpan(1),
+                                    ->columnSpan(1)
+                                    ->required(),
                                 Forms\Components\TextInput::make('x3')
                                     ->hiddenLabel()
                                     ->numeric()
                                     ->placeholder('X3')
-                                    ->columnSpan(1),
+                                    ->columnSpan(1)
+                                    ->required(),
                                 Forms\Components\TextInput::make('x4')
                                 ->hiddenLabel()
-
                                     ->numeric()
                                     ->placeholder('X4')
-                                    ->columnSpan(1),
+                                    ->columnSpan(1)
+                                    ->required(),
                                 Forms\Components\TextInput::make('x5')
                                     ->hiddenLabel()
                                     ->numeric()
                                     ->placeholder('X5')
-                                    ->columnSpan(1),
+                                    ->columnSpan(1)
+                                    ->required(),
                             ])
                             ->columns(5)
                             ->columnSpanFull(),
@@ -150,27 +155,32 @@ class ManageAnchor extends ManageRelatedRecords
                                     ->hiddenLabel()
                                     ->placeholder('Y1')
                                     ->numeric()
-                                    ->columnSpan(1),
+                                    ->columnSpan(1)
+                                    ->required(),
                                 Forms\Components\TextInput::make('y2')
                                     ->hiddenLabel()
                                     ->numeric()
                                     ->placeholder('Y2')
-                                    ->columnSpan(1),
+                                    ->columnSpan(1)
+                                    ->required(),
                                 Forms\Components\TextInput::make('y3')
                                     ->hiddenLabel()
                                     ->numeric()
                                     ->placeholder('Y3')
-                                    ->columnSpan(1),
+                                    ->columnSpan(1)
+                                    ->required(),
                                 Forms\Components\TextInput::make('y4')
                                     ->hiddenLabel()
                                     ->numeric()
                                     ->placeholder('Y4')
-                                    ->columnSpan(1),
+                                    ->columnSpan(1)
+                                    ->required(),
                                 Forms\Components\TextInput::make('y5')
                                     ->hiddenLabel()
                                     ->numeric()
                                     ->placeholder('Y5')
-                                    ->columnSpan(1),
+                                    ->columnSpan(1)
+                                    ->required(),
                             ])
                             ->columns(5)
                             ->columnSpanFull(),
