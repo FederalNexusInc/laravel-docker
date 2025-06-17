@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Clusters\Configurations;
 use App\Filament\Resources\SoilLayerTypeResource\Pages;
 use App\Filament\Resources\SoilLayerTypeResource\RelationManagers;
 use App\Models\SoilLayerType;
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class SoilLayerTypeResource extends Resource
 {
     protected static ?string $model = SoilLayerType::class;
-    protected static ?string $navigationGroup = 'Soil Configurations';
+    protected static ?string $cluster = Configurations::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
