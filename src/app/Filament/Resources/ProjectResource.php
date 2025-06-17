@@ -26,7 +26,8 @@ class ProjectResource extends Resource
             ->schema([
                 Forms\Components\Hidden::make('created_by')
                     ->default(fn () => Auth::id()),
-                Forms\Components\TextInput::make('project_name')->columnSpan(4),
+                Forms\Components\TextInput::make('project_name')->columnSpan(4)
+                    ->required(),
                 Forms\Components\TextInput::make('project_number')->columnSpan(4),
                 Forms\Components\TextInput::make('run_id')->columnSpan(4),
                 Forms\Components\TextInput::make('soil_reporter')->label('Soils Report Provided/Performed by')->columnSpan(3),

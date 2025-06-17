@@ -48,6 +48,7 @@ class ManageAnchor extends ManageRelatedRecords
                     ->label('Lead Shaft Length')
                     ->numeric()
                     ->nullable()
+                    ->required()
                     ->columnSpan(4),
                 Forms\Components\Select::make('extension_shaft_od')
                     ->label('Extension Shaft Od')
@@ -60,31 +61,37 @@ class ManageAnchor extends ManageRelatedRecords
                         '6 5/8' => '6 5/8',
                         '8 5/8'=> '8 5/8',
                     ])
+                    ->required()
                     ->columnSpan(4),
                 Forms\Components\TextInput::make('wall_thickness')
                     ->label('Wall Thickness')
                     ->numeric()
                     ->nullable()
+                    ->required()
                     ->columnSpan(4),
                 Forms\Components\TextInput::make('yield_strength')
                     ->label('Yield Strength')
                     ->numeric()
                     ->nullable()
+                    ->required()
                     ->columnSpan(4),
                 Forms\Components\TextInput::make('tensile_strength')
                     ->label('Tensile Strength')
                     ->numeric()
                     ->nullable()
+                    ->required()
                     ->columnSpan(4),
                 Forms\Components\TextInput::make('empirical_torque_factor')
                     ->label('Empirical Torque Factor')
                     ->numeric()
                     ->nullable()
+                    ->required()
                     ->columnSpan(4),
                 Forms\Components\TextInput::make('required_allowable_capacity')
                     ->label('Required Allowable Capacity')
                     ->numeric()
                     ->nullable()
+                    ->required()
                     ->columnSpan(4),
                 Forms\Components\Radio::make('anchor_type')
                     ->label('Anchor Type')
@@ -96,21 +103,25 @@ class ManageAnchor extends ManageRelatedRecords
                     ->inline()
                     ->inlineLabel(false)
                     ->nullable()
+                    ->required()
                     ->columnSpan(4),
                 Forms\Components\TextInput::make('required_safety_factor')
                     ->label('Required Safety Factor')
                     ->numeric()
                     ->nullable()
+                    ->required()
                     ->columnSpan(4),
                 Forms\Components\TextInput::make('anchor_declination_degree')
                     ->label('Anchor Declination Degree')
                     ->numeric()
                     ->nullable()
+                    ->required()
                     ->columnSpan(4),
                 Forms\Components\TextInput::make('pile_head_position')
                     ->label('Pile Head Position')
                     ->numeric()
                     ->nullable()
+                    ->required()
                     ->columnSpan(4),
                 Forms\Components\Grid::make(1)
                     ->schema([

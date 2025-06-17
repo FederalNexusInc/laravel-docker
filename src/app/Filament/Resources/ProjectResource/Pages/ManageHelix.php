@@ -70,7 +70,8 @@ class ManageHelix extends ManageRelatedRecords
                         }
                         $rating = $this->getRatingFromDescription($state);
                         $set('rating', $rating);
-                    }),
+                    })
+                    ->required(),
                 Forms\Components\TextInput::make('size')
                     ->disabled()
                     ->dehydrated()
@@ -83,7 +84,8 @@ class ManageHelix extends ManageRelatedRecords
                     ->label('Thickness'),
                 Forms\Components\TextInput::make('rating')
                     ->numeric()
-                    ->label('Rating'),
+                    ->label('Rating')
+                    ->required(),
                 Forms\Components\TextInput::make('helix_count')
                     ->label('Helix Count')
                     ->integer()
