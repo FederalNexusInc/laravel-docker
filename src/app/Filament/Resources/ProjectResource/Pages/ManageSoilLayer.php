@@ -19,7 +19,7 @@ class ManageSoilLayer extends ManageRelatedRecords
 {
     protected static string $resource = ProjectResource::class;
     protected static string $relationship = 'soilLayers';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-square-3-stack-3d';
 
     public static function getNavigationLabel(): string
     {

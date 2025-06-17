@@ -17,7 +17,7 @@ class ManageProjectSpecialist extends ManageRelatedRecords
 
     protected static string $relationship = 'projectSpecialist';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-plus';
 
     public static function getNavigationLabel(): string
     {

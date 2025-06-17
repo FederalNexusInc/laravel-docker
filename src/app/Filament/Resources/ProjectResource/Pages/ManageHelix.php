@@ -17,7 +17,7 @@ class ManageHelix extends ManageRelatedRecords
 {
     protected static string $resource = ProjectResource::class;
     protected static string $relationship = 'helixes';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'clarity-helix-line';
 
     public static function getNavigationLabel(): string
     {

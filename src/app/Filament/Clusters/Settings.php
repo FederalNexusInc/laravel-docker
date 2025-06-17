@@ -7,5 +7,5 @@ use Filament\Clusters\Cluster;
 class Settings extends Cluster
 {
     protected static ?string $navigationGroup = 'Setting And Configurations';
-    protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
+    protected static ?string $navigationIcon = 'clarity-cog-line';
 }

@@ -17,7 +17,7 @@ class ManageAnchor extends ManageRelatedRecords
 {
     protected static string $resource = ProjectResource::class;
     protected static string $relationship = 'anchors';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'zondicon-anchor';
 
     public static function getNavigationLabel(): string
     {

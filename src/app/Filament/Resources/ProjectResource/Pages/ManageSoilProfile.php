@@ -18,7 +18,7 @@ class ManageSoilProfile extends ManageRelatedRecords
 
     protected static string $relationship = 'soilProfile';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     public static function getNavigationLabel(): string
     {

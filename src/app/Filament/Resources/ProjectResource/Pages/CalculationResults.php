@@ -6,15 +6,15 @@ use App\Models\Project;
 use App\Services\PDFResult;
 use Filament\Actions\Action;
 use App\Services\ResultService;
-// use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Resources\Pages\Page;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Model;
 use App\Filament\Resources\ProjectResource;
 use Illuminate\Database\Eloquent\Collection;
 
 class CalculationResults extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'clarity-document-outline-badged';
     protected static string $resource = ProjectResource::class;
     protected static string $view = 'filament.resources.project-resource.pages.calculation-results';
 
@@ -156,5 +156,20 @@ class CalculationResults extends Page
             'type' => 'info',
             'message' => 'Anchor changed, recalculating...',
         ]);
+    }
+    
+    /**
+     * @return array<string, mixed>
+     */
+    public function getSubNavigationParameters(): array
+    {
+        return [
+            'record' => Project::find($this->projectId),
+        ];
+    }
+
+    public function getSubNavigation(): array
+    {
+        return static::getResource()::getRecordSubNavigation($this);
     }
 }
