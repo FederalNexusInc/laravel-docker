@@ -3,7 +3,7 @@
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
             <select
                 wire:model.live="selectedAnchorId"
-                class="form-select border-gray-300 focus:border-primary-500 focus:ring-primary-500 rounded-md shadow-sm"
+                class="form-select border-gray-300 focus:border-primary-500 focus:ring-primary-500 rounded-md shadow-sm dark:bg-gray-900 dark:border-gray-800"
             >
                 @foreach ($anchors as $anchor)
                     <option value="{{ $anchor->anchor_id }}">
@@ -22,7 +22,7 @@
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
             <select
                 wire:model.live="selectedAnchorId"
-                class="form-select border-gray-300 focus:border-primary-500 focus:ring-primary-500 rounded-md shadow-sm"
+                class="form-select border-gray-300 focus:border-primary-500 focus:ring-primary-500 rounded-md shadow-sm dark:bg-gray-900 dark:border-gray-800"
             >
                 @foreach ($anchors as $anchor)
                     <option value="{{ $anchor->anchor_id }}">
@@ -38,10 +38,10 @@
     @endif
 
     @if (count($data) > 0)
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 ">
             <select
                 wire:model.live="selectedAnchorId"
-                class="form-select border-gray-300 focus:border-primary-500 focus:ring-primary-500 rounded-md shadow-sm"
+                class="form-select border-gray-300 focus:border-primary-500 focus:ring-primary-500 rounded-md shadow-sm dark:bg-gray-900 dark:border-gray-800"
             >
                 @foreach ($anchors as $anchor)
                     <option value="{{ $anchor->anchor_id }}">
@@ -70,50 +70,50 @@
             </div>
         </div>
         <div>
-        @if (count($this->getFilteredResults()) > 0)
-            <table class="w-full bg-white border border-gray-200">
-                <thead>
-                    <tr>
-                        <th class="px-4 py-2 border-b">Depth (ft)</th>
-                        <th class="px-4 py-2 border-b">Ultimate Anchor Capacity (lbs)</th>
-                        <th class="px-4 py-2 border-b">Torsional Resistance (lb-ft)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($this->minDepth > 1)
-                        <tr
-                            class="cursor-pointer hover:bg-gray-50"
-                            wire:click="expandAbove"
-                        >
-                            <td colspan="3" class="px-4 py-2 border-b text-center text-primary-600 font-medium">
-                                Expand Above
-                            </td>
-                        </tr>
-                    @endif
-
-                    @foreach ($this->getFilteredResults() as $depth => $results)
+            @if (count($this->getFilteredResults()) > 0)
+                <table class="w-full bg-white border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                    <thead>
                         <tr>
-                            <td class="px-4 py-2 border-b text-center">{{ $depth }}</td>
-                            <td class="px-4 py-2 border-b text-center">{{ round($results['anchor_capacity'], 2) }} lbs</td>
-                            <td class="px-4 py-2 border-b text-center">{{ round($results['torsional_resistance'], 2) }} lb-ft</td>
+                            <th class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-gray-950 dark:text-white">Depth (ft)</th>
+                            <th class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-gray-950 dark:text-white">Ultimate Anchor Capacity (lbs)</th>
+                            <th class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-gray-950 dark:text-white">Torsional Resistance (lb-ft)</th>
                         </tr>
-                    @endforeach
+                    </thead>
+                    <tbody>
+                        @if ($this->minDepth > 1)
+                            <tr
+                                class="cursor-pointer hover:bg-gray-50 dark:hover:bg-white/5"
+                                wire:click="expandAbove"
+                            >
+                                <td colspan="3" class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-center text-primary-600 dark:text-primary-400 font-medium">
+                                    Expand Above
+                                </td>
+                            </tr>
+                        @endif
 
-                    @if ($this->maxDepth < max(array_keys($data['DepthResults'])))
-                        <tr
-                            class="cursor-pointer hover:bg-gray-50"
-                            wire:click="expandBelow"
-                        >
-                            <td colspan="3" class="px-4 py-2 border-b text-center text-primary-600 font-medium">
-                                Expand Below
-                            </td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
-        @else
-            <p>No depth-specific results available.</p>
-        @endif
+                        @foreach ($this->getFilteredResults() as $depth => $results)
+                            <tr class="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-900 dark:even:bg-gray-800">
+                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-center text-gray-950 dark:text-white">{{ $depth }}</td>
+                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-center text-gray-950 dark:text-white">{{ round($results['anchor_capacity'], 2) }} lbs</td>
+                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-center text-gray-950 dark:text-white">{{ round($results['torsional_resistance'], 2) }} lb-ft</td>
+                            </tr>
+                        @endforeach
+
+                        @if ($this->maxDepth < max(array_keys($data['DepthResults'])))
+                            <tr
+                                class="cursor-pointer hover:bg-gray-50 dark:hover:bg-white/5"
+                                wire:click="expandBelow"
+                            >
+                                <td colspan="3" class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-center text-primary-600 dark:text-primary-400 font-medium">
+                                    Expand Below
+                                </td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+            @else
+                <p class="dark:text-gray-400">No depth-specific results available.</p>
+            @endif
         </div>
         <div class="">
             @livewire(App\Filament\Resources\ProjectResource\Widgets\AnchorResult::class, [

@@ -72,6 +72,7 @@ class AdminPanelProvider extends PanelProvider
             ->userMenuItems([
                 'profile' => MenuItem::make()
                     ->url(fn (): string => MyProfile::getUrl())
-            ]);
+            ])
+            ->sidebarCollapsibleOnDesktop();
     }
 }

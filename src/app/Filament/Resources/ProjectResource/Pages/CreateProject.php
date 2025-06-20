@@ -17,7 +17,7 @@ class CreateProject extends CreateRecord
         return ProjectResource::getUrl('edit', ['record' => $this->record->project_id]);
     }
 
-        protected function handleRecordCreation(array $data): Model
+    protected function handleRecordCreation(array $data): Model
     {
         $project = static::getModel()::create($data);
         session(['last_created_project_id' => $project->id]);
