@@ -43,7 +43,7 @@ class ManageSoilLayer extends ManageRelatedRecords
                     ->numeric()
                     ->columnSpan(4),
                 Forms\Components\Select::make('soil_layer_type_id')
-                    ->label('Soil Layer Type')
+                    ->label('Type')
                     ->options(SoilLayerType::all()->pluck('name', 'soil_layer_type_id'))
                     ->searchable()
                     ->required()
@@ -59,7 +59,6 @@ class ManageSoilLayer extends ManageRelatedRecords
                     ->columnSpan(3),
                 Forms\Components\TextInput::make('coefficient_of_external_friction')
                     ->numeric()
-                    ->label('External Friction Coefficient')
                     ->columnSpan(3),
                 Forms\Components\TextInput::make('moist_unit_weight')
                     ->numeric()
@@ -87,36 +86,43 @@ class ManageSoilLayer extends ManageRelatedRecords
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('soilLayerType.name')
-                    ->label('Soil Layer Type')
+                    ->label('Type')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('blow_count')
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->label('N'),
                 Tables\Columns\TextColumn::make('cohesion')
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->label('c'),
                 Tables\Columns\TextColumn::make('coefficient_of_adhesion')
                     ->label('Coeff. Adhesion')
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->label('α'),
                 Tables\Columns\TextColumn::make('angle_of_internal_friction')
                     ->label('Int. Friction Angle')
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->label('Ø'),
                 Tables\Columns\TextColumn::make('coefficient_of_external_friction')
                     ->label('Ext. Friction Coeff.')
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->label('Β'),
                 Tables\Columns\TextColumn::make('moist_unit_weight')
                     ->label('Moist Unit Weight')
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->label('γm'),
                 Tables\Columns\TextColumn::make('saturated_unit_weight')
                     ->label('Sat. Unit Weight')
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->label('γsat'),
                 Tables\Columns\TextColumn::make('nc')
                     ->sortable()
                     ->toggleable(),

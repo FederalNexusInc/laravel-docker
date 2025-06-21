@@ -30,7 +30,7 @@ class ProjectResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('project_number')->columnSpan(4),
                 Forms\Components\TextInput::make('run_id')->columnSpan(4),
-                Forms\Components\TextInput::make('soil_reporter')->label('Soils Report Provided/Performed by')->columnSpan(3),
+                Forms\Components\TextInput::make('soil_reporter')->label('Soils Report Performed by')->columnSpan(3),
                 Forms\Components\TextInput::make('soil_report_number')->columnSpan(3),
                 Forms\Components\DatePicker::make('soil_report_date')->columnSpan(3),
                 Forms\Components\Select::make('pile_type')

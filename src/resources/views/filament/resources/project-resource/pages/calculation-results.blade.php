@@ -52,21 +52,21 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="flex-1">
-                <h2 class="text-xl font-bold mb-2 text-center">Helical Pile/Anchor Information</h2>
-                <p class="text-center">Req. Allowable Pile Capacity: {{ round($data['RequiredAllowableCapacity'] ?? 0, 2) }} kip</p>
-                <p class="text-center">Applied Factor of Safety: {{ round($data['RequiredSafetyFactor'] ?? 0, 2) }}</p>
-                <p class="text-center">Helical Pile Diameter: {{ $data['HelicalPileDiameter'] ?? 0 }} in</p>
-                <p class="text-center">Helix Configuration: {{ $data['HelixConfiguration'] ?? 'N/A' }}</p>
-                <p class="text-center">Torque Correlation Factor: {{ round($data['EmpericalTorqueFactor'] ?? 0, 2) }} lbs/ft-lbs</p>
+                <h2 class="text-xl font-bold mb-2 text-left">Helical Pile/Anchor Information</h2>
+                <p class="text-left"><strong>Req. Allowable Pile Capacity:</strong> {{ round($data['RequiredAllowableCapacity'] ?? 0, 2) }} kip</p>
+                <p class="text-left"><strong>Applied Factor of Safety:</strong> {{ round($data['RequiredSafetyFactor'] ?? 0, 2) }}</p>
+                <p class="text-left"><strong>Helical Pile Diameter:</strong> {{ $data['HelicalPileDiameter'] ?? 0 }} in</p>
+                <p class="text-left"><strong>Helix Configuration:</strong> {{ $data['HelixConfiguration'] ?? 'N/A' }}</p>
+                <p class="text-left"><strong>Torque Correlation Factor:</strong> {{ round($data['EmpericalTorqueFactor'] ?? 0, 2) }} lbs/ft-lbs</p>
             </div>
 
             <div class="flex-1">
-                <h2 class="text-xl font-bold mb-2 text-center">Estimated Pile Capacity</h2>
-                <p class="text-center">Allowable Frictional Resistance: {{ round($data['AllowableFrictionalResistance'] ?? 0, 2) }} kip</p>
-                <p class="text-center">Allowable End Bearing Capacity: {{ round($data['AllowableEndBearing'] ?? 0, 2) }} kip</p>
-                <p class="text-center">Allowable Pile Capacity: {{ round($data['AllowablePileCapacity'] ?? 0, 2) }} kip</p>
-                <p class="text-center">Approximate Pile Embedment Depth: {{ round($data['ApproximatePileEmbedmentDepth'] ?? 0, 2) }} ft</p>
-                <p class="text-center">Required Min. Installation Torque: {{ round($data['RequiredInstallationTorque'] ?? 0, 2) }} ft-lbs</p>
+                <h2 class="text-xl font-bold mb-2 text-left">Estimated Pile Capacity</h2>
+                <p class="text-left"><strong>Allowable Frictional Resistance:</strong> {{ round($data['AllowableFrictionalResistance'] ?? 0, 2) }} kip</p>
+                <p class="text-left"><strong>Allowable End Bearing Capacity:</strong> {{ round($data['AllowableEndBearing'] ?? 0, 2) }} kip</p>
+                <p class="text-left"><strong>Allowable Pile Capacity:</strong> {{ round($data['AllowablePileCapacity'] ?? 0, 2) }} kip</p>
+                <p class="text-left"><strong>Approximate Pile Embedment Depth:</strong> {{ round($data['ApproximatePileEmbedmentDepth'] ?? 0, 2) }} ft</p>
+                <p class="text-left"><strong>Required Min. Installation Torque:</strong> {{ round($data['RequiredInstallationTorque'] ?? 0, 2) }} ft-lbs</p>
             </div>
         </div>
         <div>
