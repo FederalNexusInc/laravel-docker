@@ -8,14 +8,14 @@ use Livewire\Attributes\On;
 
 class AnchorResult extends ChartWidget
 {
-    protected static ?string $heading = 'Anchor Result';
+    protected static ?string $heading = '';
 
     public string $title = '';
     public array $depth = [];
     public array $anchorCapacity = [];
     public array $torsionalResistance = [];
     
-    protected $listeners = ['saveChartImage' => 'saveBase64DecodedData'];
+    protected $listeners = ['saveResultChartImage' => 'saveBase64DecodedData'];
 
     public function getFilteredResults()
     {
@@ -39,10 +39,10 @@ class AnchorResult extends ChartWidget
         $this->torsionalResistance = $result_torsionalResistance;
     }
 
-    #[On('saveChartImage')]
-    public function saveChartImage($base64Image)
+    #[On('saveResultChartImage')]
+    public function saveResultChartImage($base64Image)
     {
-        session(['chart_image_base64' => $base64Image]); // Store in session
+        session(['result_chart_image_base64' => $base64Image]); // Store in session
     }
 
     protected function getData(): array

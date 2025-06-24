@@ -62,7 +62,8 @@ class PDFResult
             // Depth results
             'calculation_type' => $resultData['CalculationType'] ?? 'N/A',
             'depth_results' => $this->formatDepthResults($resultData['DepthResults'] ?? []),
-            'chart_image' => session('chart_image_base64') ?? 'N/A',
+            'result_chart_image' => session('result_chart_image_base64') ?? 'N/A',
+            'soil_chart_image' => session('soil_chart_image_base64') ?? 'N/A',
         ];
 
         Log::info('pdfData', [

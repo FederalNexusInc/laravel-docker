@@ -114,8 +114,46 @@
             @else
                 <p class="dark:text-gray-400">No depth-specific results available.</p>
             @endif
+            @php
+                $pileHeadPosition = (float)($this->data['PileHeadPosition'] ?? 0);
+                $maxDepth = (float)($this->data['MaxDepth'] ?? 0);
+                $anchorDeclinationDegree = (float)($this->data['AnchorDeclinationDegree'] ?? 0);
+                $waterTableDepth = (float)($this->data['WaterTableDepth'] ?? 0);
+                $soilLayers = $this->data['SoilLayers'] ?? collect([]);
+
+                $declinationRad = deg2rad($anchorDeclinationDegree);
+                $depthDifference = (float)($maxDepth - $pileHeadPosition);
+                $anchorX = $depthDifference * cos($declinationRad);
+                $anchorY = $pileHeadPosition + ($depthDifference * sin($declinationRad));
+
+                $anchorX = is_numeric($anchorX) && !is_nan($anchorX) && !is_infinite($anchorX) ? (float)$anchorX : 0.0;
+                $anchorY = is_numeric($anchorY) && !is_nan($anchorY) && !is_infinite($anchorY) ? (float)$anchorY : 0.0;
+
+                $anchor = [
+                    [0.0, $pileHeadPosition],
+                    [(float)$anchorX, (float)$anchorY]
+                ];
+
+                $depthValues = array_values(array_reverse(
+                    array_unique(
+                        array_reverse(
+                            array_merge(
+                                array_map(fn($r) => (float)(($r['start_depth'] ?? 0) + $pileHeadPosition), $soilLayers->toArray() ?? []),
+                                [(float)$maxDepth, (float)$waterTableDepth]
+                            )
+                        )
+                    )
+                ));
+            @endphp
         </div>
         <div class="">
+            @livewire(App\Filament\Resources\ProjectResource\Widgets\SoilProfileChart::class, [
+                    'title' => 'Soil Layers',
+                    'anchor' => $anchor,
+                    'depth' => $depthValues,
+                    'angle' => [$this->data['AnchorDeclinationDegree']]
+                ])
+                &nbsp;
             @livewire(App\Filament\Resources\ProjectResource\Widgets\AnchorResult::class, [
                 'title' => $data['CalculationType']->value,
                 'depth' => array_keys($this->data['DepthResults']),
@@ -132,13 +170,15 @@
         <script>
             window.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
-                    const canvas = document.querySelector('canvas');
-                    // console.log("Save Chart");
-                    if (canvas) {
-                        const base64Image = canvas.toDataURL('image/png');
-                        // console.log(base64Image);
-                        window.Livewire.dispatch('saveChartImage', { base64Image });
-                    } else {
+                    const canvases = document.querySelectorAll('canvas');
+                    
+                    if (canvases.length >= 2) {
+                        const chartImage1 = canvases[0].toDataURL('image/png');
+                        const chartImage2 = canvases[1].toDataURL('image/png');
+                        window.Livewire.dispatch('saveSoilChartImage', {base64Image: chartImage1});
+                        window.Livewire.dispatch('saveResultChartImage', {base64Image: chartImage2});
+                    } 
+                    else {
                         alert("Canvas not found!");
                     }
                 }, 1000);
