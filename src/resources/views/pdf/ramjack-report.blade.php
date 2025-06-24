@@ -455,11 +455,16 @@
     </div>
     <div class="clearfix"></div>
     <div>
-        @if (!empty($chart_image) && $chart_image !== 'N/A')
-            <img src="{{ $chart_image }}" alt="Anchor Result Chart" width='100%'/>
+        @if (!empty($soil_chart_image) && $soil_chart_image !== 'N/A')Add commentMore actions
+            <img src="{{ $soil_chart_image }}" alt="Soil Chart" width='100%'/>
         @else
             <p></p>
         @endif
+    </div>
+    <p></p>
+    <div>
+        @if (!empty($result_chart_image) && $result_chart_image !== 'N/A')
+            <img src="{{ $result_chart_image }}" alt="Anchor Result Chart" width='100%'/>
     </div>
 </body>
 </html>
