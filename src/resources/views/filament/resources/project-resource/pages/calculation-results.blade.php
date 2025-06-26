@@ -93,7 +93,11 @@
 
                         @foreach ($this->getFilteredResults() as $depth => $results)
                             <tr class="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-900 dark:even:bg-gray-800">
-                                <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-center text-gray-950 dark:text-white">{{ $depth }}</td>
+                                @if ($depth > $data['ApproximatePileEmbedmentDepth'])
+                                    <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-center text-primary-500 dark:text-primary-500">{{ $depth }}</td>
+                                @else 
+                                    <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-center text-success-500 dark:text-success-500">{{ $depth }}</td>
+                                @endif
                                 <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-center text-gray-950 dark:text-white">{{ round($results['anchor_capacity'], 2) }} lbs</td>
                                 <td class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 text-center text-gray-950 dark:text-white">{{ round($results['torsional_resistance'], 2) }} lb-ft</td>
                             </tr>
