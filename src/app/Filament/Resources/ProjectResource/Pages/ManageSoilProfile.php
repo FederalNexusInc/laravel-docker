@@ -25,6 +25,19 @@ class ManageSoilProfile extends ManageRelatedRecords
         return 'Soil Profile';
     }
 
+    public function getBreadcrumbs(): array
+    {
+        $breadcrumbs = parent::getBreadcrumbs();
+
+        $project = $this->getOwnerRecord();
+
+        $projectId = $project->getKey();
+
+        $newBreadcrumbs = array_slice( $breadcrumbs, 0, 1 ) + [ 0 => "Project {$projectId}" ] + $breadcrumbs;
+
+        return $newBreadcrumbs;
+    }
+
     public function form(Form $form): Form
     {
         return $form
@@ -58,6 +71,7 @@ class ManageSoilProfile extends ManageRelatedRecords
     {
         return $table
             ->recordTitleAttribute('project_id')
+            ->striped()
             ->columns([
                 Tables\Columns\TextColumn::make('maximum_depth')
                 ->toggleable(),

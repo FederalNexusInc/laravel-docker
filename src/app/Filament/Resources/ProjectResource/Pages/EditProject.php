@@ -16,4 +16,14 @@ class EditProject extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    public function getBreadcrumbs(): array
+    {
+        $breadcrumbs = parent::getBreadcrumbs();
+        $projectId = $this->record->project_id;
+
+        $newBreadcrumbs = array_slice( $breadcrumbs, 0, 1 ) + [ 0 => "Project {$projectId}" ] + $breadcrumbs;
+
+        return $newBreadcrumbs;
+    }
 }

@@ -24,6 +24,19 @@ class ManageProjectSpecialist extends ManageRelatedRecords
         return 'Project Specialist';
     }
 
+    public function getBreadcrumbs(): array
+    {
+        $breadcrumbs = parent::getBreadcrumbs();
+
+        $project = $this->getOwnerRecord();
+
+        $projectId = $project->getKey();
+
+        $newBreadcrumbs = array_slice( $breadcrumbs, 0, 1 ) + [ 0 => "Project {$projectId}" ] + $breadcrumbs;
+
+        return $newBreadcrumbs;
+    }
+
     public function form(Form $form): Form
     {
         return $form
@@ -34,7 +47,7 @@ class ManageProjectSpecialist extends ManageRelatedRecords
                 ->disabled()
                 ->required()
                 ->default($this->getOwnerRecord()->project_id)
-                ->columnSpan(3), 
+                ->columnSpan(3),
             Forms\Components\TextInput::make('name')
                 ->required()
                 ->columnSpan(3),
@@ -63,6 +76,7 @@ class ManageProjectSpecialist extends ManageRelatedRecords
     {
         return $table
             ->recordTitleAttribute('name')
+            ->striped()
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->sortable()

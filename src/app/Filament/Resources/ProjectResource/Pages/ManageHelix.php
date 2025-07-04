@@ -24,6 +24,19 @@ class ManageHelix extends ManageRelatedRecords
         return 'Helixes';
     }
 
+    public function getBreadcrumbs(): array
+    {
+        $breadcrumbs = parent::getBreadcrumbs();
+
+        $project = $this->getOwnerRecord();
+
+        $projectId = $project->getKey();
+
+        $newBreadcrumbs = array_slice( $breadcrumbs, 0, 1 ) + [ 0 => "Project {$projectId}" ] + $breadcrumbs;
+
+        return $newBreadcrumbs;
+    }
+
     public function form(Form $form): Form
     {
         $projectId = $this->getOwnerRecord()->project_id;
@@ -31,7 +44,7 @@ class ManageHelix extends ManageRelatedRecords
             ->orderBy('anchor_id', 'asc')
             ->pluck('lead_shaft_od', 'anchor_id')
             ->toArray();
-        
+
         $defaultAnchorId = count($anchors) > 0 ? array_key_first($anchors) : null;
 
         return $form
@@ -97,6 +110,7 @@ class ManageHelix extends ManageRelatedRecords
     {
         return $table
             ->recordTitleAttribute('helix_id')
+            ->striped()
             ->columns([
                 Tables\Columns\TextColumn::make('anchor.lead_shaft_od')
                     ->label('Anchor OD')

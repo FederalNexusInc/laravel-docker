@@ -61,6 +61,7 @@ class ProjectResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->striped()
             ->modifyQueryUsing(function (Builder $query) {
                 if (!Auth::user()->hasRole('super_admin')) {
                     $query->where('created_by', Auth::id());

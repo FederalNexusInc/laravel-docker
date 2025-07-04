@@ -24,6 +24,19 @@ class ManageAnchor extends ManageRelatedRecords
         return 'Anchors';
     }
 
+    public function getBreadcrumbs(): array
+    {
+        $breadcrumbs = parent::getBreadcrumbs();
+
+        $project = $this->getOwnerRecord();
+
+        $projectId = $project->getKey();
+
+        $newBreadcrumbs = array_slice( $breadcrumbs, 0, 1 ) + [ 0 => "Project {$projectId}" ] + $breadcrumbs;
+
+        return $newBreadcrumbs;
+    }
+
     public function form(Form $form): Form
     {
         return $form
@@ -222,6 +235,7 @@ class ManageAnchor extends ManageRelatedRecords
     {
         return $table
             ->recordTitleAttribute('anchor_id')
+            ->striped()
             ->columns([
                 Tables\Columns\TextColumn::make('lead_shaft_od')
                     ->label('Lead Shaft OD')
