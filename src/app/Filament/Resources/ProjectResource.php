@@ -60,7 +60,30 @@ class ProjectResource extends Resource
                     ->relationship('projectSpecialist', 'name')
                     ->columnSpan(12)
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->columnSpan(3),
+                        Forms\Components\TextInput::make('specialist_email')
+                            ->email()
+                            ->label('Email')
+                            ->columnSpan(3),
+                        Forms\Components\TextInput::make('company_name')
+                            ->columnSpan(3),
+                        Forms\Components\TextInput::make('address')
+                            ->columnSpan(3),
+                        Forms\Components\TextInput::make('city')
+                            ->columnSpan(3),
+                        Forms\Components\Select::make('state')
+                                ->options(self::getStates())
+                                ->searchable()
+                                ->columnSpan(3),
+                        Forms\Components\TextInput::make('zip')
+                            ->columnSpan(3),
+                        Forms\Components\Textarea::make('remarks')
+                            ->columnSpan(12),
+                    ]),
             ])
             ->columns(12);
     }
@@ -213,7 +236,7 @@ class ProjectResource extends Resource
             'index' => Pages\ListProjects::route('/'),
             'create' => Pages\CreateProject::route('/create'),
             'edit' => Pages\EditProject::route('/{record}/edit'),
-            'project-specialist' => Pages\ManageProjectSpecialist::route('/{record}/project-specialist'),
+            // 'project-specialist' => Pages\ManageProjectSpecialist::route('/{record}/project-specialist'),
             'soil-profile' => Pages\ManageSoilProfile::route('/{record}/soil-profile'),
             'soil-layers' => Pages\ManageSoilLayer::route('/{record}/soil-layers'),
             'anchors' => Pages\ManageAnchor::route('/{record}/anchors'),
@@ -226,7 +249,7 @@ class ProjectResource extends Resource
     {
         return $page->generateNavigationItems([
             Pages\EditProject::class,
-            Pages\ManageProjectSpecialist::class,
+            // Pages\ManageProjectSpecialist::class,
             Pages\ManageSoilProfile::class,
             Pages\ManageSoilLayer::class,
             Pages\ManageAnchor::class,
