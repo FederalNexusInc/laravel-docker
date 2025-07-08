@@ -41,13 +41,6 @@ class ManageProjectSpecialist extends ManageRelatedRecords
     {
         return $form
         ->schema([
-            Forms\Components\Select::make('project_id')
-                ->label('Project')
-                ->relationship('project', 'project_name')
-                ->disabled()
-                ->required()
-                ->default($this->getOwnerRecord()->project_id)
-                ->columnSpan(3),
             Forms\Components\TextInput::make('name')
                 ->required()
                 ->columnSpan(3),

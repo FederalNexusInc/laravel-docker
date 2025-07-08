@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\RelationManagers;
+use App\Models\ProjectSpecialist;
 
 class ProjectResource extends Resource
 {
@@ -54,8 +55,14 @@ class ProjectResource extends Resource
                     ->columnSpan(3),
                 Forms\Components\TextInput::make('project_zip_code')->columnSpan(3),
                 Forms\Components\Textarea::make('remarks')->label('Field Notes')->columnSpan(12),
+                Forms\Components\Select::make('project_specialist_id')
+                    ->label('Project Specialist')
+                    ->relationship('projectSpecialist', 'name')
+                    ->columnSpan(12)
+                    ->searchable()
+                    ->preload(),
             ])
-            ->columns(12);;
+            ->columns(12);
     }
 
     public static function table(Table $table): Table
@@ -163,6 +170,11 @@ class ProjectResource extends Resource
                     ->searchable()
                     ->toggleable()
                     ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('projectSpecialist.name')
+                    ->label('Specialist')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([

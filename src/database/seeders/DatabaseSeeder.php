@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
             'project_zip_code' => '55555',
             'remarks' => 'Test',
             'created_by' => 1,
+            'project_specialist_id' => 1,
         ]);
 
         SoilLayerType::factory()->create([
@@ -63,7 +64,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         ProjectSpecialist::factory()->create([
-            'project_id' => 1,
             'name' => 'Tyler S',
             'specialist_email' => 'email@email.com',
             'company_name' => 'Test Company',
