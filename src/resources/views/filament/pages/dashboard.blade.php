@@ -1,4 +1,5 @@
 <x-filament-panels::page>
+    @livewire('disclaimer-modal')
     <div>
         <section class="bg-gray-50 dark:bg-gray-800 py-16 px-4 sm:px-6 lg:px-8 text-center rounded-lg shadow-lg mb-12">
             <h1 class="text-3xl sm:text-4xl font-bold text-center text-gray-950 dark:text-white mb-10"">

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\RelationManagers;
+use App\Models\ProjectSpecialist;
 
 class ProjectResource extends Resource
 {
@@ -54,8 +55,37 @@ class ProjectResource extends Resource
                     ->columnSpan(3),
                 Forms\Components\TextInput::make('project_zip_code')->columnSpan(3),
                 Forms\Components\Textarea::make('remarks')->label('Field Notes')->columnSpan(12),
+                Forms\Components\Select::make('project_specialist_id')
+                    ->label('Project Specialist')
+                    ->relationship('projectSpecialist', 'name')
+                    ->columnSpan(12)
+                    ->searchable()
+                    ->preload()
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->columnSpan(3),
+                        Forms\Components\TextInput::make('specialist_email')
+                            ->email()
+                            ->label('Email')
+                            ->columnSpan(3),
+                        Forms\Components\TextInput::make('company_name')
+                            ->columnSpan(3),
+                        Forms\Components\TextInput::make('address')
+                            ->columnSpan(3),
+                        Forms\Components\TextInput::make('city')
+                            ->columnSpan(3),
+                        Forms\Components\Select::make('state')
+                                ->options(self::getStates())
+                                ->searchable()
+                                ->columnSpan(3),
+                        Forms\Components\TextInput::make('zip')
+                            ->columnSpan(3),
+                        Forms\Components\Textarea::make('remarks')
+                            ->columnSpan(12),
+                    ]),
             ])
-            ->columns(12);;
+            ->columns(12);
     }
 
     public static function table(Table $table): Table
@@ -163,6 +193,11 @@ class ProjectResource extends Resource
                     ->searchable()
                     ->toggleable()
                     ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('projectSpecialist.name')
+                    ->label('Specialist')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
@@ -201,11 +236,13 @@ class ProjectResource extends Resource
             'index' => Pages\ListProjects::route('/'),
             'create' => Pages\CreateProject::route('/create'),
             'edit' => Pages\EditProject::route('/{record}/edit'),
-            'project-specialist' => Pages\ManageProjectSpecialist::route('/{record}/project-specialist'),
-            'soil-profile' => Pages\ManageSoilProfile::route('/{record}/soil-profile'),
-            'soil-layers' => Pages\ManageSoilLayer::route('/{record}/soil-layers'),
-            'anchors' => Pages\ManageAnchor::route('/{record}/anchors'),
-            'helixes' => Pages\ManageHelix::route('/{record}/helixes'),
+            // 'project-specialist' => Pages\ManageProjectSpecialist::route('/{record}/project-specialist'),
+            // 'soil-profile' => Pages\ManageSoilProfile::route('/{record}/soil-profile'),
+            // 'soil-layers' => Pages\ManageSoilLayer::route('/{record}/soil-layers'),
+            'soil-data' => Pages\ManageSoilData::route('{record}/soil-data'),
+            // 'anchors' => Pages\ManageAnchor::route('/{record}/anchors'),
+            // 'helixes' => Pages\ManageHelix::route('/{record}/helixes'),
+            'piles' => Pages\ManageAnchorData::route('/{record}/piles'),
             'calc' => Pages\CalculationResults::route('/{record}/calc'),
         ];
     }
@@ -214,11 +251,13 @@ class ProjectResource extends Resource
     {
         return $page->generateNavigationItems([
             Pages\EditProject::class,
-            Pages\ManageProjectSpecialist::class,
-            Pages\ManageSoilProfile::class,
-            Pages\ManageSoilLayer::class,
-            Pages\ManageAnchor::class,
-            Pages\ManageHelix::class,
+            // Pages\ManageProjectSpecialist::class,
+            Pages\ManageSoilData::class,
+            // Pages\ManageSoilProfile::class,
+            // Pages\ManageSoilLayer::class,
+            // Pages\ManageAnchor::class,
+            // Pages\ManageHelix::class,
+            Pages\ManageAnchorData::class,
             Pages\CalculationResults::class,
         ]);
     }

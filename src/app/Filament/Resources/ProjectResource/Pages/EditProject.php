@@ -20,9 +20,9 @@ class EditProject extends EditRecord
     public function getBreadcrumbs(): array
     {
         $breadcrumbs = parent::getBreadcrumbs();
-        $projectId = $this->record->project_id;
+        $projectName = $this->record->project_name;
 
-        $newBreadcrumbs = array_slice( $breadcrumbs, 0, 1 ) + [ 0 => "Project {$projectId}" ] + $breadcrumbs;
+        $newBreadcrumbs = array_slice( $breadcrumbs, 0, 1 ) + [ 0 => "{$projectName}" ] + $breadcrumbs;
 
         return $newBreadcrumbs;
     }

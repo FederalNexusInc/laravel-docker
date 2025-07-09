@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('project_specialists', function (Blueprint $table) {
             $table->id('project_specialists_id');
-            $table->unsignedBigInteger('project_id')->nullable();
-            $table->foreign('project_id')->references('project_id')->on('projects')->onDelete('cascade');
+            // $table->unsignedBigInteger('project_id')->nullable();
+            // $table->foreign('project_id')->references('project_id')->on('projects')->onDelete('cascade');
             $table->string('name');
             $table->string('specialist_email')->nullable();
             $table->string('company_name')->nullable();
