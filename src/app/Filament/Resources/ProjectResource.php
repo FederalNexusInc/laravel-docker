@@ -240,8 +240,9 @@ class ProjectResource extends Resource
             // 'soil-profile' => Pages\ManageSoilProfile::route('/{record}/soil-profile'),
             // 'soil-layers' => Pages\ManageSoilLayer::route('/{record}/soil-layers'),
             'soil-data' => Pages\ManageSoilData::route('{record}/soil-data'),
-            'anchors' => Pages\ManageAnchor::route('/{record}/anchors'),
-            'helixes' => Pages\ManageHelix::route('/{record}/helixes'),
+            // 'anchors' => Pages\ManageAnchor::route('/{record}/anchors'),
+            // 'helixes' => Pages\ManageHelix::route('/{record}/helixes'),
+            'piles' => Pages\ManageAnchorData::route('/{record}/piles'),
             'calc' => Pages\CalculationResults::route('/{record}/calc'),
         ];
     }
@@ -254,8 +255,9 @@ class ProjectResource extends Resource
             Pages\ManageSoilData::class,
             // Pages\ManageSoilProfile::class,
             // Pages\ManageSoilLayer::class,
-            Pages\ManageAnchor::class,
-            Pages\ManageHelix::class,
+            // Pages\ManageAnchor::class,
+            // Pages\ManageHelix::class,
+            Pages\ManageAnchorData::class,
             Pages\CalculationResults::class,
         ]);
     }

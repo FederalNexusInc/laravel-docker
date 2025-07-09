@@ -29,6 +29,7 @@ class SoilLayersTable extends BaseWidget
                     ->where('soil_profile_id', $this->soilProfileId)
                     ->orderBy('start_depth')
             )
+            ->striped()
             ->columns([
                 Tables\Columns\TextColumn::make('start_depth')
                     ->sortable()

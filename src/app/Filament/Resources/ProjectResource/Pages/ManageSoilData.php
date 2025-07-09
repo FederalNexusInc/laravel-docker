@@ -68,6 +68,7 @@ class ManageSoilData extends ManageRelatedRecords
     {
         return $table
             ->recordTitleAttribute('project_id')
+            ->striped()
             ->columns([
                 TextColumn::make('maximum_depth')
                     ->label('Max Depth')
