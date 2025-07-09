@@ -34,7 +34,8 @@ class ProjectFactory extends Factory
             'project_state' => $this->faker->stateAbbr,
             'project_zip_code' => $this->faker->postcode,
             'remarks' => $this->faker->sentence,
-            'created_by' => 1, // Or dynamically generate if needed
+            'created_by' => 1,
+            'project_specialist_id' => 1,
         ];
     }
 }

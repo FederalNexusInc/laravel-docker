@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('project_state', 2)->nullable();
             $table->string('project_zip_code')->nullable();
             $table->text('remarks')->nullable();
+            $table->unsignedBigInteger('project_specialist_id')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

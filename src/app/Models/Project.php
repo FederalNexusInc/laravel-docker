@@ -32,7 +32,8 @@ class Project extends Model
         'project_state',
         'project_zip_code',
         'remarks',
-        'created_by'
+        'created_by',
+        'project_specialist_id',
     ];
 
     protected $dates = [
@@ -87,7 +88,7 @@ class Project extends Model
      */
     public function projectSpecialist(): HasOne
     {
-        return $this->hasOne(ProjectSpecialist::class, 'project_id');
+        return $this->hasOne(ProjectSpecialist::class, 'project_specialists_id', 'project_specialist_id');
     }
 
     /**

@@ -19,7 +19,6 @@ class ProjectSpecialistFactory extends Factory
     public function definition(): array
     {
         return [
-            'project_id' => 1, // Or, generate dynamically if needed
             'name' => $this->faker->name,
             'specialist_email' => $this->faker->unique()->safeEmail,
             'company_name' => $this->faker->company,

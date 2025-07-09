@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -12,7 +13,6 @@ class ProjectSpecialist extends Model
 
     protected $primaryKey = 'project_specialists_id';
     protected $fillable = [
-        'project_id',
         'name',
         'specialist_email',
         'company_name',
@@ -26,10 +26,10 @@ class ProjectSpecialist extends Model
     /**
      * The project the specialist is assigned to.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return HasMany<Project>
      */
-    public function project(): BelongsTo
+    public function projects(): HasMany
     {
-        return $this->belongsTo(Project::class, 'project_id');
+        return $this->hasMany(Project::class, 'project_specialists_id', 'project_specialist_id');
     }
 }
