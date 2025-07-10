@@ -73,38 +73,38 @@
             @if (count($this->getFilteredResults()) > 0)
                 <table class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm">
                     <thead>
-                        <tr class="bg-gray-50 dark:bg-gray-700/50">
-                            <th class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 border-r text-left text-sm font-medium text-gray-700 dark:text-gray-300">Depth (ft)</th>
-                            <th class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 border-r text-left text-sm font-medium text-gray-700 dark:text-gray-300">Ultimate Anchor Capacity (lbs)</th>
-                            <th class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Torsional Resistance (lb-ft)</th>
+                        <tr class="bg-gray-50 dark:bg-gray-800">
+                            <th class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 border-r text-left text-sm font-medium text-gray-700 dark:text-white">Depth (ft)</th>
+                            <th class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 border-r text-left text-sm font-medium text-gray-700 dark:text-white">Ultimate Anchor Capacity (lbs)</th>
+                            <th class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 text-left text-sm font-medium text-gray-700 dark:text-white">Torsional Resistance (lb-ft)</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         @if ($this->minDepth > 1)
-                            <tr class="bg-gray-50 dark:bg-gray-700/30 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors cursor-pointer"
+                            <tr class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors cursor-pointer"
                                 wire:click="expandAbove">
-                                <td colspan="3" class="px-4 py-3 text-center text-sm font-medium text-primary-600 dark:text-primary-400">
+                                <td colspan="3" class="px-4 py-3 text-center text-sm font-medium text-primary-600 dark:text-primary-600">
                                     Expand Above
                                 </td>
                             </tr>
                         @endif
 
                         @foreach ($this->getFilteredResults() as $depth => $results)
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors {{ $loop->even ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-800/50' }}">
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors {{ $loop->even ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-700' }}">
                                 @if ($depth > $data['ApproximatePileEmbedmentDepth'])
-                                    <td class="px-4 py-3 border-r border-gray-200 dark:border-gray-700 text-sm text-center font-medium text-primary-600 dark:text-primary-400">{{ $depth }}</td>
-                                @else 
-                                    <td class="px-4 py-3 border-r border-gray-200 dark:border-gray-700 text-sm text-center font-medium text-emerald-600 dark:text-emerald-400">{{ $depth }}</td>
+                                    <td class="px-4 py-3 border-r border-gray-200 dark:border-gray-700 text-sm text-center font-medium text-primary-600 dark:text-primary-600">{{ $depth }}</td>
+                                @else
+                                    <td class="px-4 py-3 border-r border-gray-200 dark:border-gray-700 text-sm text-center font-medium text-emerald-600 dark:text-white">{{ $depth }}</td>
                                 @endif
-                                <td class="px-4 py-3 border-r border-gray-200 dark:border-gray-700 text-sm text-center text-gray-700 dark:text-gray-300">{{ number_format(round($results['anchor_capacity'], 2)) }} lbs</td>
-                                <td class="px-4 py-3 text-sm text-center text-gray-700 dark:text-gray-300">{{ number_format(round($results['torsional_resistance'], 2)) }} lb-ft</td>
+                                <td class="px-4 py-3 border-r border-gray-200 dark:border-gray-700 text-sm text-center text-gray-700 dark:text-white">{{ number_format(round($results['anchor_capacity'], 2)) }} lbs</td>
+                                <td class="px-4 py-3 text-sm text-center text-gray-700 dark:text-white">{{ number_format(round($results['torsional_resistance'], 2)) }} lb-ft</td>
                             </tr>
                         @endforeach
 
                         @if ($this->maxDepth < max(array_keys($data['DepthResults'])))
-                            <tr class="bg-gray-50 dark:bg-gray-700/30 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors cursor-pointer"
+                            <tr class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors cursor-pointer"
                                 wire:click="expandBelow">
-                                <td colspan="3" class="px-4 py-3 text-center text-sm font-medium text-primary-600 dark:text-primary-400">
+                                <td colspan="3" class="px-4 py-3 text-center text-sm font-medium text-primary-600 dark:text-primary-600">
                                     Expand Below
                                 </td>
                             </tr>
@@ -164,7 +164,6 @@
     @else
         <p>No data available.</p>
     @endif
-    <!-- Trigger for saving the chart image -->
 
     @push('scripts')
         <script>
@@ -186,3 +185,4 @@
         </script>
     @endpush
 </x-filament::page>
+
