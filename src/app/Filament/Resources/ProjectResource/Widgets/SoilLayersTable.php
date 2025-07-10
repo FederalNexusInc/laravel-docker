@@ -33,24 +33,29 @@ class SoilLayersTable extends BaseWidget
             ->columns([
                 Tables\Columns\TextColumn::make('start_depth')
                     ->sortable()
-                    ->label('Depth'),
+                    ->label('Depth')
+                    ->suffix(' ft'),
                 Tables\Columns\TextColumn::make('soilLayerType.name')
                     ->label('Type')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('blow_count')
                     ->label('N'),
                 Tables\Columns\TextColumn::make('cohesion')
-                    ->label('c'),
+                    ->label('c')
+                    ->suffix(' psf'),
                 Tables\Columns\TextColumn::make('coefficient_of_adhesion')
                     ->label('α'),
                 Tables\Columns\TextColumn::make('angle_of_internal_friction')
-                    ->label('Ø'),
+                    ->label('Ø')
+                    ->suffix(' °'),
                 Tables\Columns\TextColumn::make('coefficient_of_external_friction')
                     ->label('Β'),
                 Tables\Columns\TextColumn::make('moist_unit_weight')
-                    ->label('γm'),
+                    ->label('γm')
+                    ->suffix(' pcf'),
                 Tables\Columns\TextColumn::make('saturated_unit_weight')
-                    ->label('γsat'),
+                    ->label('γsat')
+                    ->suffix(' pcf'),
                 Tables\Columns\TextColumn::make('nc'),
                 Tables\Columns\TextColumn::make('nq'),
             ])
@@ -91,6 +96,7 @@ class SoilLayersTable extends BaseWidget
                     ->required(),
                 Forms\Components\TextInput::make('start_depth')
                     ->numeric()
+                    ->suffix('ft')
                     ->required()
                     ->columnSpan(4),
                 Forms\Components\TextInput::make('blow_count')
@@ -108,6 +114,7 @@ class SoilLayersTable extends BaseWidget
                     ->numeric()
                     ->columnSpan(3)
                     ->label('C')
+                    ->suffix('psf')
                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: 'Cohesion'),
                 Forms\Components\TextInput::make('coefficient_of_adhesion')
                     ->numeric()
@@ -118,6 +125,7 @@ class SoilLayersTable extends BaseWidget
                     ->numeric()
                     ->columnSpan(3)
                     ->label('Ø')
+                    ->suffix('°')
                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: 'Angle Of Internal Friction'),
                 Forms\Components\TextInput::make('coefficient_of_external_friction')
                     ->numeric()
@@ -128,11 +136,13 @@ class SoilLayersTable extends BaseWidget
                     ->numeric()
                     ->columnSpan(3)
                     ->label('γm')
+                    ->suffix('pcf')
                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: 'Moist Unit Weight'),
                 Forms\Components\TextInput::make('saturated_unit_weight')
                     ->numeric()
                     ->columnSpan(3)
                     ->label('γsat')
+                    ->suffix('pcf')
                     ->hintIcon('heroicon-m-question-mark-circle', tooltip: 'Saturated Unit Weight'),
                 Forms\Components\TextInput::make('nc')
                     ->numeric()

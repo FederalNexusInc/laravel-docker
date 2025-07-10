@@ -25,9 +25,9 @@ class ManageAnchorData extends ManageRelatedRecords
 
         $project = $this->getOwnerRecord();
 
-        $projectId = $project->getKey();
+        $projectName = $project->project_name;
 
-        $newBreadcrumbs = array_slice( $breadcrumbs, 0, 1 ) + [ 0 => "Project {$projectId}" ] + $breadcrumbs;
+        $newBreadcrumbs = array_slice( $breadcrumbs, 0, 1 ) + [ 0 => "{$projectName}" ] + $breadcrumbs;
 
         return $newBreadcrumbs;
     }
@@ -39,8 +39,8 @@ class ManageAnchorData extends ManageRelatedRecords
                 Forms\Components\Hidden::make('project_id')
                     ->default($this->getOwnerRecord()->project_id)
                     ->required(),
-                Forms\Components\Select::make('lead_shaft_od')
-                    ->label('Lead Shaft Od')
+               Forms\Components\Select::make('lead_shaft_od_select')
+                    ->label('Lead Shaft OD')
                     ->options([
                         '2 3/8' => '2 3/8',
                         '2 7/8' => '2 7/8',
@@ -48,15 +48,49 @@ class ManageAnchorData extends ManageRelatedRecords
                         '4 1/2' => '4 1/2',
                         '5 1/2' => '5 1/2',
                         '6 5/8' => '6 5/8',
-                        '8 5/8'=> '8 5/8',
+                        '8 5/8' => '8 5/8',
+                        'custom' => 'Other (Please specify)',
                     ])
+                    ->live()
+                    ->nullable()
+                    ->afterStateHydrated(function (Forms\Components\Select $component, Forms\Get $get, Forms\Set $set, $record) {
+                        $predefinedOptions = array_keys($component->getOptions());
+                        $predefinedOptions = array_filter($predefinedOptions, fn($option) => $option !== 'custom');
+
+                        if ($record && $record->lead_shaft_od) {
+                            if (in_array($record->lead_shaft_od, $predefinedOptions)) {
+                                $set('lead_shaft_od_select', $record->lead_shaft_od);
+                            } else {
+                                $set('lead_shaft_od_select', 'custom');
+                            }
+                        } else {
+                            $set('lead_shaft_od_select', null);
+                        }
+                    })
+                    ->afterStateUpdated(function ($state, Forms\Set $set) {
+                        if ($state !== 'custom') {
+                            $set('lead_shaft_od', $state);
+                        } else {
+                            $set('lead_shaft_od', null);
+                        }
+                    })
+                    ->dehydrated(false)
                     ->columnSpan(4)
                     ->required(),
+
+                Forms\Components\TextInput::make('lead_shaft_od')
+                    ->label('Custom Lead Shaft OD')
+                    ->placeholder('Enter custom OD')
+                    ->hidden(fn (Forms\Get $get): bool => $get('lead_shaft_od_select') !== 'custom')
+                    ->required(fn (Forms\Get $get): bool => $get('lead_shaft_od_select') === 'custom')
+                    ->columnSpan(4)
+                    ->suffix('in'),
                 Forms\Components\TextInput::make('lead_shaft_length')
                     ->label('Lead Shaft Length')
                     ->numeric()
                     ->nullable()
                     ->required()
+                    ->suffix('ft')
                     ->columnSpan(4),
                 Forms\Components\Select::make('extension_shaft_od')
                     ->label('Extension Shaft Od')
@@ -70,6 +104,7 @@ class ManageAnchorData extends ManageRelatedRecords
                         '8 5/8'=> '8 5/8',
                     ])
                     ->required()
+                    ->suffix('in')
                     ->columnSpan(4),
                 Forms\Components\TextInput::make('wall_thickness')
                     ->label('Wall Thickness')
@@ -94,12 +129,14 @@ class ManageAnchorData extends ManageRelatedRecords
                     ->numeric()
                     ->nullable()
                     ->required()
+                    ->suffix('lb/lb-ft')
                     ->columnSpan(4),
                 Forms\Components\TextInput::make('required_allowable_capacity')
                     ->label('Required Allowable Capacity')
                     ->numeric()
                     ->nullable()
                     ->required()
+                    ->suffix('kips')
                     ->columnSpan(4),
                 Forms\Components\Radio::make('anchor_type')
                     ->label('Anchor Type')
@@ -205,7 +242,6 @@ class ManageAnchorData extends ManageRelatedRecords
                             ->columnSpanFull(),
                     ])
                     ->columnSpanFull(),
-
                 Forms\Components\Checkbox::make('omit_shaft_resistance')
                     ->label('Omit Shaft Resistance')
                     ->default(false)
@@ -236,19 +272,22 @@ class ManageAnchorData extends ManageRelatedRecords
                     ->label('Lead Shaft OD')
                     ->searchable()
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->suffix(' in'),
                 Tables\Columns\TextColumn::make('lead_shaft_length')
                     ->label('Lead Shaft Length')
                     ->numeric()
                     ->sortable()
                     ->toggleable()
-                    ->toggledHiddenByDefault(),
+                    ->toggledHiddenByDefault()
+                    ->suffix(' ft'),
                 Tables\Columns\TextColumn::make('extension_shaft_od')
                     ->label('Ext. Shaft OD')
                     ->searchable()
                     ->sortable()
                     ->toggleable()
-                    ->toggledHiddenByDefault(),
+                    ->toggledHiddenByDefault()
+                    ->suffix(' in'),
                 Tables\Columns\TextColumn::make('wall_thickness')
                     ->label('Wall Thickness')
                     ->numeric()
@@ -272,13 +311,15 @@ class ManageAnchorData extends ManageRelatedRecords
                     ->numeric()
                     ->sortable()
                     ->toggleable()
-                    ->toggledHiddenByDefault(),
+                    ->toggledHiddenByDefault()
+                    ->suffix(' lb/lb-ft'),
                 Tables\Columns\TextColumn::make('required_allowable_capacity')
                     ->label('Req. Allow. Capacity')
                     ->numeric()
                     ->sortable()
                     ->toggleable()
-                    ->toggledHiddenByDefault(),
+                    ->toggledHiddenByDefault()
+                    ->suffix('kips'),
                 Tables\Columns\TextColumn::make('anchor_type')
                     ->label('Anchor Type')
                     ->formatStateUsing(fn (string $state): string => match ($state) {

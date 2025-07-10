@@ -20,6 +20,7 @@ class CalculationResults extends Page
 
     public ?array $data = [];
     public ?int $projectId = null;
+    public ?Project $project;
     public Collection $anchors;
     public ?int $selectedAnchorId = null;
 
@@ -29,8 +30,8 @@ class CalculationResults extends Page
     public function mount(): void
     {
         $this->projectId = Route::current()->parameter('record');
-        $project = Project::find($this->projectId);
-        $this->anchors = $project->anchors;
+        $this->project = Project::find($this->projectId);
+        $this->anchors = $this->project->anchors;
 
         if ($this->anchors->isNotEmpty()) {
             $this->selectedAnchorId = $this->anchors->first()->anchor_id;
@@ -156,7 +157,7 @@ class CalculationResults extends Page
     {
         $breadcrumbs = parent::getBreadcrumbs();
 
-        $newBreadcrumbs = array_slice( $breadcrumbs, 0, 1 ) + [ 0 => "Project {$this->projectId}" ] + $breadcrumbs;
+        $newBreadcrumbs = array_slice( $breadcrumbs, 0, 1 ) + [ 0 => "{$this->project->project_name}" ] + $breadcrumbs;
 
         return $newBreadcrumbs;
     }

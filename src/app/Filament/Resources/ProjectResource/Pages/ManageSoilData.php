@@ -28,9 +28,9 @@ class ManageSoilData extends ManageRelatedRecords
 
         $project = $this->getOwnerRecord();
 
-        $projectId = $project->getKey();
+        $projectName = $project->project_name;
 
-        $newBreadcrumbs = array_slice( $breadcrumbs, 0, 1 ) + [ 0 => "Project {$projectId}" ] + $breadcrumbs;
+        $newBreadcrumbs = array_slice( $breadcrumbs, 0, 1 ) + [ 0 => "{$projectName}" ] + $breadcrumbs;
 
         return $newBreadcrumbs;
     }
@@ -49,10 +49,10 @@ class ManageSoilData extends ManageRelatedRecords
                         Forms\Components\TextInput::make('maximum_depth')
                             ->numeric()
                             ->required()
-                            ->suffix('m'),
+                            ->suffix('ft'),
                         Forms\Components\TextInput::make('water_table_depth')
                             ->numeric()
-                            ->suffix('m'),
+                            ->suffix('ft'),
                         Forms\Components\Select::make('soil_type')
                             ->options([
                                 'cohesive' => 'Cohesive',
@@ -72,10 +72,10 @@ class ManageSoilData extends ManageRelatedRecords
             ->columns([
                 TextColumn::make('maximum_depth')
                     ->label('Max Depth')
-                    ->suffix(' m'),
+                    ->suffix(' ft'),
                 TextColumn::make('water_table_depth')
                     ->label('Water Table')
-                    ->suffix(' m'),
+                    ->suffix(' ft'),
                 TextColumn::make('soil_type')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
